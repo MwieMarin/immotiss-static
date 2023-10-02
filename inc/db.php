@@ -45,6 +45,7 @@ require 'PHPMailer/SMTP.php';
 
     function formsubmit( $postdata ) {
         require( 'config.php' );
+        mb_internal_encoding("UTF-8");
         if( $postdata[ 'company' ] === '' || $postdata[ 'street' ] === '' || $postdata[ 'postal_code' ] === '' || $postdata[ 'location' ] === '' ) {
             $return = 'download';
         } else {
@@ -62,19 +63,20 @@ require 'PHPMailer/SMTP.php';
             report,
             datetime
         ) VALUES (
-            '" . $postdata[ 'prename' ] . "',
-            '" . $postdata[ 'lastname' ] . "',
-            '" . $postdata[ 'email' ] . "',
-            '" . $postdata[ 'company' ] . "',
-            '" . $postdata[ 'street' ] . "',
-            '" . $postdata[ 'postal_code' ] . "',
-            '" . $postdata[ 'location' ] . "',
-            '" . $postdata[ 'remarks' ] . "',
-            '" . $return . "',
+            '" . mb_convert_encoding( $postdata[ 'prename' ], 'UTF-8' ) . "',
+            '" . mb_convert_encoding( $postdata[ 'lastname' ], 'UTF-8' ) . "',
+            '" . mb_convert_encoding( $postdata[ 'email' ], 'UTF-8' ) . "',
+            '" . mb_convert_encoding( $postdata[ 'company' ], 'UTF-8' ) . "',
+            '" . mb_convert_encoding( $postdata[ 'street' ], 'UTF-8' ) . "',
+            '" . mb_convert_encoding( $postdata[ 'postal_code' ], 'UTF-8' ) . "',
+            '" . mb_convert_encoding( $postdata[ 'location' ], 'UTF-8' ) . "',
+            '" . mb_convert_encoding( $postdata[ 'remarks' ], 'UTF-8' ) . "',
+            '" . mb_convert_encoding( $return, 'UTF-8' ) . "',
             '" . date( 'Y-m-d H:i:s' ) . "'
         );";
         $db = db_connect();
-        mysqli_set_charset('utf8'); // mysqli extension
+        // mysqli_set_charset('utf8'); // mysqli extension
+        $db->set_charset("utf8mb4");
         mysqli_query( $db, $sql );
         // send mail
         $request = $return === 'mailing' ? 'Post' : 'Download';

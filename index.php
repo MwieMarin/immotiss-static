@@ -373,7 +373,7 @@
                     </div>
                     <div class="column column-2">
                         <?php if( !$_POST ) : ?>
-                        <form method="POST" autocomplete="on">
+                        <form method="POST" accept-charset="utf-8" autocomplete="on">
                             <h2>SEWO 23<br><span>Bestellformular</span></h2>
                             <p>Die digitale Version erhalten Sie ganz einfach als PDF zum herunterladen:</p>
                             <input type="hidden" id="url" name="url">
